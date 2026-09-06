@@ -26,7 +26,7 @@ export default function Navbar() {
   return (
     <header className={`site-nav ${scrolled ? "scrolled" : ""}`}>
       <nav>
-        <a href="#" className="nav-logo"><span className="logo-box">P</span>PRASAD<span className="reg">™</span></a>
+        <a href="#" className="nav-logo"><span className="logo-box">P</span><span>PRASAD</span><span className="reg">™</span></a>
         <div className="nav-links">{links.map(([label, href]) => <a key={label} href={href}>{label}</a>)}</div>
         <div className="nav-actions"><a className="nav-pill" href="#contact">Request a bid</a><a className="nav-cta" href="#contact">Talk to us <ArrowUpRight size={16} /></a></div>
         <button className="mobile-menu" onClick={() => setOpen(true)} aria-label="Open menu"><Menu size={29} /></button>
