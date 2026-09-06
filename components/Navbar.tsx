@@ -1,8 +1,47 @@
 "use client";
-import {useEffect,useState} from "react";
-import {Menu,X,ArrowUpRight} from "lucide-react";
-import {AnimatePresence,motion} from "framer-motion";
-const links=["Home","About","Services","Clients","Blog","Contact"]; const go=(x:string)=>({Home:"#",About:"#about",Services:"#services",Clients:"#industries",Blog:"#case-studies",Contact:"#contact"} as Record<string,string>)[x];
-export default function Navbar(){const [open,setOpen]=useState(false),[scrolled,setScrolled]=useState(false);useEffect(()=>{const f=()=>setScrolled(window.scrollY>60);f();window.addEventListener("scroll",f);return()=>window.removeEventListener("scroll",f)},[]);
-return <header className={"site-nav "+(scrolled?"scrolled":"")}><nav><a href="#" className="nav-logo"><span className="logo-box">C</span>CONVOY<span className="reg">©</span></a><div className="nav-links">{links.map(x=><a key={x} href={go(x)}>{x}</a>)}</div><div className="nav-actions"><a className="nav-pill" href="#contact">Templates</a><a className="nav-cta" href="#contact">Get Template</a></div><button className="mobile-menu" onClick={()=>setOpen(true)} aria-label="Open menu"><Menu size={29}/></button></nav>
-<AnimatePresence>{open&&<motion.div className="mobile-panel" initial={{x:"100%"}} animate={{x:0}} exit={{x:"100%"}} transition={{duration:.45,ease:[.16,1,.3,1]}}><div className="mobile-top"><a href="#" onClick={()=>setOpen(false)} className="nav-logo"><span className="logo-box">C</span>CONVOY<span className="reg">©</span></a><button onClick={()=>setOpen(false)}><X size={29}/></button></div><span className="mobile-label">Navigation</span><div className="mobile-links">{links.map(x=><a key={x} href={go(x)} onClick={()=>setOpen(false)}>{x}</a>)}</div><div className="mobile-actions"><a href="#contact" onClick={()=>setOpen(false)}>Template</a><a href="#contact" onClick={()=>setOpen(false)}>Buy Template <ArrowUpRight size={17}/></a></div></motion.div></AnimatePresence>}</header>}
+import { useEffect, useState } from "react";
+import { Menu, X, ArrowUpRight } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+
+const links = [
+  ["Home", "#"],
+  ["About", "#about"],
+  ["Services", "#services"],
+  ["Industries", "#industries"],
+  ["Case Studies", "#case-studies"],
+  ["Contact", "#contact"]
+];
+
+export default function Navbar() {
+  const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 70);
+    onScroll();
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  return (
+    <header className={`site-nav ${scrolled ? "scrolled" : ""}`}>
+      <nav>
+        <a href="#" className="nav-logo"><span className="logo-box">P</span>PRASAD<span className="reg">™</span></a>
+        <div className="nav-links">{links.map(([label, href]) => <a key={label} href={href}>{label}</a>)}</div>
+        <div className="nav-actions"><a className="nav-pill" href="#contact">Request a bid</a><a className="nav-cta" href="#contact">Talk to us <ArrowUpRight size={16} /></a></div>
+        <button className="mobile-menu" onClick={() => setOpen(true)} aria-label="Open menu"><Menu size={29} /></button>
+      </nav>
+
+      <AnimatePresence>
+        {open && (
+          <motion.div className="mobile-panel" initial={{ x: "100%" }} animate={{ x: 0 }} exit={{ x: "100%" }} transition={{ duration: .45, ease: [.16, 1, .3, 1] }}>
+            <div className="mobile-top"><a href="#" onClick={() => setOpen(false)} className="nav-logo"><span className="logo-box">P</span>PRASAD<span className="reg">™</span></a><button onClick={() => setOpen(false)} aria-label="Close menu"><X size={29} /></button></div>
+            <span className="mobile-label">Navigation</span>
+            <div className="mobile-links">{links.map(([label, href]) => <a key={label} href={href} onClick={() => setOpen(false)}>{label}</a>)}</div>
+            <div className="mobile-actions"><a href="#contact" onClick={() => setOpen(false)}>Request a bid</a><a href="#contact" onClick={() => setOpen(false)}>Talk to us <ArrowUpRight size={17} /></a></div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </header>
+  );
+}
